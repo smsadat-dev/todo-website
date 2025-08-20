@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtualenv
+.venv/
+
+# Environment
+.env
+
+# Django migrations
+*/migrations/*.pyc
+*/migrations/__pycache__/
+
+# Database
+*.sqlite3
+
+# Node / frontend
+node_modules/
+dist/
+
+# IDE / OS
+.vscode/
+*.swp
+.DS_Store
