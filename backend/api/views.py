@@ -3,11 +3,14 @@ import json
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.utils.timezone import localtime
 from django.views.decorators.csrf import csrf_exempt
 
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
 
+from .models import TaskModel
 
 @csrf_exempt  # used JWT instead
 def usrLogin(request):
@@ -83,18 +86,69 @@ def userLogout(request):
 @csrf_exempt # used JWT instead
 def processTasks(request):
 
-    # show all the tasks to do of requested user in a list
-    if request.method == 'GET':
+    jwt_auth = JWTAuthentication()
+    auth_result = jwt_auth.authenticate(request)
 
+    if auth_result is None:
+        return JsonResponse({'status': 'error', 'message': 'Invalid or missing token'}, status=401)
+
+    user, validate_token = auth_result
+
+    # show all the tasks to do of requested user in a list
+
+    if request.method == 'GET':
+        tasks = TaskModel.objects.filter(user=user).values('id', 'title', 'description', 'creationTime', 'completed')
+        return JsonResponse({
+            'status': 'success',
+            'tasks': list(tasks),
+        }, safe=False)        
 
     elif request.method == 'POST':
+        body = json.loads(request.body)
+        taskTitle = body.get('tasksTitle')
+        taskDesc = body.get('tasksDescrp')
+        
+        task = TaskModel(
+            user = user,
+            title = taskTitle,
+            description = taskDesc
+        )
+        task.save()
+        task_id = getattr(task, 'id', getattr(task, 'pk', None))
 
-    elif request.method == 'PUT':
-
-    elif request.method == 'PATCH':
-
-    elif request.method == 'DELETE':
+        return JsonResponse({
+            'status': 'success',
+            'message': 'Task created successfully',
+            'task': {
+                'taskID': task_id,
+                'taskTitle': taskTitle,
+                'taskDesc': taskDesc,
+                'creationTime': localtime(task.creationTime).strftime('%Y-%m-%d %H:%M:%S'),
+                'isDone': task.completed,
+            }
+        })
     
+    elif request.method == 'DELETE':
+        
+        try: 
+            data = json.loads(request.body)
+            task_id = data.get('task_id')
+            if not task_id:
+                return JsonResponse({'status': 'error', 'message': 'task_id missing'}, status=400)
+ 
+        except (json.JSONDecodeError, AttributeError):
+            return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
+
+        # delete only if task belongs to requested user
+        try:
+            task = TaskModel.objects.filter(user=user, id=task_id)
+            task.delete()
+            return JsonResponse({'status': 'success', 'message': 'Task deleted'})
+        
+        except TaskModel.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'Task not found'}, status=404)
+
+
     else:
         return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
     
