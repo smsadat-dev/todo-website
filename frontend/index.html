@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> ToDo Site </title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="res/icon.png"> 
+</head>
+<body>
+    <main>
+    <!-- render user login and registration interface -->
+
+    <div id="userMgmt">
+
+        <!-- user login -->
+        <div id="loginHeader">
+            <h1> Login </h1>
+        </div>
+        <div id="userFormLogin">
+            <form method="POST">
+                <div class="usernameField">
+                    <p><label for="id_username" id="id_unametitle">Username</label></p>
+                    <p><input type="text" name="username" id="id_username" placeholder="Enter username..."></p>
+                </div>
+                
+                <div id="passwordField">
+                    <p><label for="id_password" id="id_pwdtitle">Password</label></p>
+                    <p><input type="password" name="password" id="id_password" placeholder="Enter password..."></p>
+                </div>
+
+                <input type="checkbox" name="remember_me" id="id_remember_me">
+                <label for="id_remember_me" id="id_remember_me_text">Remember me</label>
+                <a href="#" id="showReg">Create new account</a>
+                <p><input type="submit" name="loginbtn" id="id_loginbtn" value="Login"></p>
+            </form>
+            <div class="auth">
+                <p class="authTitle">_________ Or login with __________</p>
+                <div class="googleLogo">
+                    <a href="res/google.png"><img src="" width="100" height="100" alt="Google"></a> 
+                </div>
+            </div>
+        </div>
+
+        <!-- user registration -->
+        <div id="registrationHeader">
+            <h1> Register </h1>
+        </div>
+        <div id="userFormReg" data-reg-url="{% url 'base:endpoint' %}">
+            <form method="POST">
+                <div class="usernameField">
+                    <p><label for="id_username" id="id_unametitle">Username</label></p>
+                    <p><input type="text" name="username" id="id_username" placeholder="Enter username..."></p>
+                </div>
+                
+                <div id="passwordField1">
+                    <p><label for="id_password1" id="id_pwdtitle1">Password</label></p>
+                    <p><input type="password" name="password1" id="id_password1" placeholder="Enter password..."></p>
+                </div>
+
+                <div id="passwordField2">
+                    <p><label for="id_password2" id="id_pwdtitle2">Confirm password</label></p>
+                    <p><input type="password" name="password2" id="id_password2" placeholder="Enter password..."></p>
+                </div>
+
+                <div id="emailField">
+                    <p><label for="id_email" id="id_emailTitle">Email</label></p>
+                    <p><input type="email" name="email" id="id_email" placeholder="Enter email..."></p>
+                </div>
+                <a href="#" id="showLogin"> Already have an account? </a>
+                <p><input type="submit" name="regbtn" id="id_regbtn" value="Register"></p>
+            </form>
+            <div class="auth">
+                <p class="authTitle">_______ Or register with ________</p>
+                <div class="googleLogo">
+                    <a href=""><img src="res/google.png" width="100" height="100" alt="Google"></a> 
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <button id="userlogout">Logout</button>
+
+    </main>
+    <script src="js/main.js"></script>
+</body>
+</html>
