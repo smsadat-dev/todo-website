@@ -33,24 +33,20 @@
                 <label for="id_remember_me" id="id_remember_me_text">Remember me</label>
                 <a href="#" id="showReg">Create new account</a>
                 <p><input type="submit" name="loginbtn" id="id_loginbtn" value="Login"></p>
+                <p>__________or__________</p>
+                <button id="googleLoginBtn">Login with Google</button>
             </form>
-            <div class="auth">
-                <p class="authTitle">_________ Or login with __________</p>
-                <div class="googleLogo">
-                    <a href="res/google.png"><img src="" width="100" height="100" alt="Google"></a> 
-                </div>
-            </div>
         </div>
 
         <!-- user registration -->
         <div id="registrationHeader">
             <h1> Register </h1>
         </div>
-        <div id="userFormReg" data-reg-url="{% url 'base:endpoint' %}">
+        <div id="userFormReg">
             <form method="POST">
                 <div class="usernameField">
-                    <p><label for="id_username" id="id_unametitle">Username</label></p>
-                    <p><input type="text" name="username" id="id_username" placeholder="Enter username..."></p>
+                    <p><label for="id_usernameReg" id="id_unametitle">Username</label></p>
+                    <p><input type="text" name="username" id="id_usernameReg" placeholder="Enter username..."></p>
                 </div>
                 
                 <div id="passwordField1">
@@ -69,18 +65,45 @@
                 </div>
                 <a href="#" id="showLogin"> Already have an account? </a>
                 <p><input type="submit" name="regbtn" id="id_regbtn" value="Register"></p>
+                <p>__________or__________</p>
+                <button id="googleRegBtn">Register with Google</button>
             </form>
-            <div class="auth">
-                <p class="authTitle">_______ Or register with ________</p>
-                <div class="googleLogo">
-                    <a href=""><img src="res/google.png" width="100" height="100" alt="Google"></a> 
-                </div>
-            </div>
         </div>
 
     </div>
 
-    <button id="userlogout">Logout</button>
+    <!-- render the task webapp itself -->
+
+    <div id="tasksbox">
+        <button id="userlogout">Logout</button>
+        <div id="titleHeader">
+            <h1>Add tasks to do</h1>
+        </div>
+
+        <!-- Create Task -->
+        <div id="tasksform">
+            <form method="POST">
+                <p>
+                    <input type="text" name="tasksTitle" id="id_tasksTitle" required>
+                    <input type="submit" name="taskAdd" id="id_taskAdd" value="Add task">
+                </p>  
+                <p><textarea name="tasksDescrp" id="id_tasksDescrp" cols="30" rows="3" placeholder="Description (optional)"></textarea></p>
+            </form>
+        </div>
+
+        <!-- Show Tasks -->
+        <div class="taskslist">
+                <ul id="tasklist" style="list-style: none;">
+                    <!-- <li id="taskView">
+                        <span id="taskTitle"></span>
+                        <span id="taskCreationTime"></span>
+                        <input type="checkbox" id="taskDoneChckBox" name="isTaskDone">
+                        <button class="deleteTaskBtn" data-id="{{ task.task_id }}">Delete</button>
+                    </li> -->
+                    <!-- <p id="noTasktoView">No tasks to do</p> -->
+                </ul>
+        </div>
+    </div>
 
     </main>
     <script src="js/main.js"></script>

@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 
 from . import views
 
@@ -9,4 +9,5 @@ urlpatterns = [
     path('registration/', views.userRegistration),
     path('logout/', views.userLogout),
     path('tasks/', views.processTasks),
+    path('auth/', include('allauth.urls')), # for Oauth
 ]

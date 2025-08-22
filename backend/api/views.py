@@ -86,6 +86,16 @@ def userLogout(request):
 @csrf_exempt # used JWT instead
 def processTasks(request):
 
+
+    if request.method == "OPTIONS":
+        # Preflight request for CORS
+        response = JsonResponse({"status": "ok"})
+        response["Access-Control-Allow-Origin"] = "*"
+        response["Access-Control-Allow-Methods"] = "POST, GET, DELETE, OPTIONS"
+        response["Access-Control-Allow-Headers"] = "Authorization, Content-Type"
+        return response
+
+
     jwt_auth = JWTAuthentication()
     auth_result = jwt_auth.authenticate(request)
 
@@ -147,7 +157,6 @@ def processTasks(request):
         
         except TaskModel.DoesNotExist:
             return JsonResponse({'status': 'error', 'message': 'Task not found'}, status=404)
-
 
     else:
         return JsonResponse({'status': 'error', 'message': 'Invalid request method'})

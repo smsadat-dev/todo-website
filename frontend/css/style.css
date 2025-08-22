@@ -77,7 +77,8 @@ body {
     font-weight: bold;
 }
 
-#id_username, 
+#id_username,
+#id_usernameReg, 
 #id_password,
 #id_password1, 
 #id_password2,
@@ -189,14 +190,14 @@ body {
     margin: 0 auto;
 }
 
-.tasksform form {
+#tasksform form {
     display: flex;
     flex-direction: column; /* stack input row + description */
     gap: 10px;              /* vertical spacing between rows */
     width: 100%;
 }
 
-.tasksform p {
+#tasksform p {
     display: flex;
     gap: 10px;      /* horizontal space between input and button */
     margin: 0;
@@ -249,7 +250,6 @@ body {
     width: 100%;
     margin-top: 20px;    /* space below form */
 }
-
 .taskslist p {
     display: flex;
     padding: 8px;
@@ -268,7 +268,7 @@ body {
 }
 
 /* Checkboxes & Delete buttons */
-.taskDoneChckBox {
+#taskDoneChckBox {
     margin-right: 10px;
 }
 
@@ -285,4 +285,9 @@ body {
 
 .deleteTaskBtn:hover {
     background-color: #c00;
+}
+
+.completedTask {
+    text-decoration: line-through;
+    color: gray;
 }
