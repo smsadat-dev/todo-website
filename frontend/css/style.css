@@ -42,27 +42,31 @@ body {
     width: 100%;
 }
 
-#userForm {
+#userFormLogin, 
+#userFormReg {
     width: 100%;
     padding-top: 10px;
     flex-direction: column;
     gap: 15px;
 }
 
-#userForm label {
+#userFormLogin label, 
+#userFormReg label {
     font-size: 1rem;
     margin-bottom: 5px;
     color: #ede4e3;
 }
 
-#userForm a {
-    color: #ffdfdb;
+#userFormLogin a, 
+#userFormReg a {
+    color: #dad4d3;
     text-decoration: none;
     transition: 0.2s;
     font-size: 0.9rem;
 }
 
-#userForm a:hover {
+#userFormLogin a:hover, 
+#userFormReg a:hover {
     color: #ff6f61;
     text-decoration: underline;
 }
@@ -109,10 +113,10 @@ body {
     width: 100%;
     flex: 0 0 auto;      /* button stays natural width */
     padding: 10px 15px;
+    border: 1px rgba(220, 220, 220, 0.366) solid;
     border-radius: 8px;
     background-color: #212121;
-    color: aliceblue;
-    border: none;
+    color: rgb(237, 239, 240);
     cursor: pointer;
     font-size: 1rem;   
     transition: 0.2s ease-in-out;
@@ -130,6 +134,7 @@ body {
 #passwordField2, 
 #emailField {
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 
@@ -286,23 +291,30 @@ body {
 }
 
 .popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 1000px;
-  height: 600px;
-  background: white;
-  border-radius: 15px;
-  box-shadow: 0 0 25px rgba(0,0,0,0.3);
-  display: flex;
-  flex-direction: column;
-  z-index: 9999;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);  /* Start smaller */
+    width: 1200px;
+    height: 800px;
+    background: rgb(66, 66, 66);
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    z-index: 9999;
+
+    opacity: 1;  /* Show */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* smooth fade & scale */
+    pointer-events: auto;     /* prevent interaction when hidden */
 }
 
 .popup.hidden {
-  display: none;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8); /* scale down when hidden */
+    pointer-events: none; /* prevent clicks while hidden */
 }
+
 
 .popup-header {
   height: 50px;
@@ -311,8 +323,9 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 15px;
-  border-bottom: 1px solid #ddd;
-  background: #f9f9f9;
+  /* border-bottom: 1px solid #ddd; */
+  border-radius: 15px;
+  background: rgb(66, 66, 66);
 }
 
 .popup-header h2 {
@@ -328,10 +341,17 @@ body {
 }
 
 #popupCloseBtn {
-  background: none;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+    padding: 3px;
+    background: none;
+    background-color: #363636;
+    border: none;
+    border-radius: 5%;
+    font-size: 18px;
+    cursor: pointer;
+    color: #000000;
 }
 
 .popup-body {
@@ -341,12 +361,52 @@ body {
 }
 
 #popupDetail {
-  width: 100%;
-  height: 100%;
-  resize: none;
-  border: none;
-  outline: none;
-  font-family: monospace;
-  font-size: 14px;
-  background: #fafafa;
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    resize: none;
+    border: none;
+    outline: none;
+    font-family: monospace;
+    font-size: 14px;
+    background: #a3a3a3;
+}
+
+.custom-notif {
+    position: fixed;
+    bottom: -50px; /* start below screen */
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333; /* grayish-black */
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease, bottom 0.3s ease;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.custom-notif.show {
+    bottom: 20px; /* slide up into view */
+    opacity: 1;
+}
+
+.custom-notif.hidden {
+    bottom: -50px; /* slide back down */
+    opacity: 0;
+    pointer-events: none;
+}
+
+.custom-notif button {
+    background: #555;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
 }

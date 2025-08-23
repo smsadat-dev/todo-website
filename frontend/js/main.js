@@ -9,27 +9,6 @@ const logout = document.getElementById('userlogout');
 const taskCotainer = document.getElementById('tasksbox');
 const taskForm = document.querySelector('#tasksform form');
 
-function fmtTime(timestamp) {
-    // remove microseconds if present, because JS Date can't parse them reliably
-    const cleanTs = timestamp.split('.')[0] + 'Z'; // ensures UTC format
-    const d = new Date(cleanTs);
-
-    // Format to "Aug 21 2025 11:58:19 PM"
-    const options = {
-        year: 'numeric',
-        month: 'short',
-        day: '2-digit',
-        hour: 'numeric',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: true,
-    };
-
-    return new Intl.DateTimeFormat('en-US', options).format(d);
-}
-
-
-
     /* INITIAL STATE */
 
     // show only login page initially
@@ -92,7 +71,7 @@ loginForm.addEventListener('submit', async (e) => {
         taskCotainer.style.display = "block";
         loadTasksList(); // load user's task list
 
-        alert(`Welcome! ${loginData.username}`);
+        // showNotif(`Welcome! ${loginData.username}`);
     }
     else 
     {
@@ -126,7 +105,7 @@ regForm.addEventListener('submit', async (e) => {
         // logout.style.display = "none";
         taskCotainer.style.display = "none";
 
-        alert(regData.message);
+        showNotif(regData.message);
     }
     else 
     {
@@ -321,10 +300,12 @@ async function loadTasksList()
                         // Fill popup with task data
                         document.getElementById("popupTitle").innerText = task.title;
                         document.getElementById("popupCreationTime").innerText = fmtTime(task.creationTime);
-                        document.getElementById("popupDetail").value = task.taskDesc || "No details provided";
+                        document.getElementById("popupDetail").value = task.description || "No details provided";
 
                         // Show popup
                         document.getElementById("taskPopup").classList.remove("hidden");
+                        // taskPopup.innerHTML = 
+                        // `<div class="popup-header">`;
                     });
                     // Close button handler
                     document.getElementById("popupCloseBtn").addEventListener("click", () => {

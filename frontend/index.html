@@ -31,12 +31,15 @@
 
                 <input type="checkbox" name="remember_me" id="id_remember_me">
                 <label for="id_remember_me" id="id_remember_me_text">Remember me</label>
-                <a href="#" id="showReg">Create new account</a>
+                <a href="#" id="showReg" style="font-size: 16px;">Create new account</a>
                 <p><input type="submit" name="loginbtn" id="id_loginbtn" value="Login"></p>
 
                 <!-- Register/Login with Google -->
                 <p>
-                    <input class="googleRegBtn" type="button" value="Login with Google">
+                    <button class="googleRegBtn">
+                        <img src="res/google.png" alt="[Google]" style="width: 18px; height: 18px; vertical-align: middle; margin-right: 5px;">
+                        Login with Google
+                    </button>
                 </p>
 
             </form>
@@ -67,12 +70,15 @@
                     <p><label for="id_email" id="id_emailTitle">Email</label></p>
                     <p><input type="email" name="email" id="id_email" placeholder="Enter email..."></p>
                 </div>
-                <a href="#" id="showLogin"> Already have an account? </a>
+                <a href="#" id="showLogin" style="font-size: 16px;"> Already have an account? </a>
                 <p><input type="submit" name="regbtn" id="id_regbtn" value="Register"></p>
 
                 <!-- Register/Login with Google -->
                 <p>
-                    <input class="googleRegBtn" type="button" value="Register with Google">
+                    <button class="googleRegBtn">
+                        <img src="res/google.png" alt="[Google]" style="width: 18px; height: 18px; vertical-align: middle; margin-right: 5px;">
+                        Registration with Google
+                    </button>
                 </p>
 
             </form>
@@ -92,7 +98,7 @@
         <div id="tasksform">
             <form method="POST">
                 <p>
-                    <input type="text" name="tasksTitle" id="id_tasksTitle" required>
+                    <input type="text" name="tasksTitle" id="id_tasksTitle" placeholder="Task title" required>
                     <input type="submit" name="taskAdd" id="id_taskAdd" value="Add task">
                 </p>  
                 <p><textarea name="tasksDescrp" id="id_tasksDescrp" cols="30" rows="3" placeholder="Description (optional)"></textarea></p>
@@ -102,30 +108,71 @@
         <!-- Show Tasks -->
         <div class="taskslist">
                 <ul id="tasklist" style="list-style: none;">
-                    <!-- <li id="taskView">
-                        <span id="taskTitle"></span>
-                        <span id="taskCreationTime"></span>
-                        <input type="checkbox" id="taskDoneChckBox" name="isTaskDone">
-                        <button class="deleteTaskBtn" data-id="{{ task.task_id }}">Delete</button>
-                    </li> -->
-                    <!-- <p id="noTasktoView">No tasks to do</p> -->
+                    <!-- code pushed by JS -->
                 </ul>
         </div>
 
+        <!-- task popup to show details -->
         <div id="taskPopup" class="popup hidden">
             <div class="popup-header">
                 <h2 id="popupTitle"></h2>
                 <span id="popupCreationTime"></span>
-                <button id="popupCloseBtn">✖</button>
+                <button id="popupCloseBtn"> <b>X</b></button>
             </div>
             <div class="popup-body">
                 <textarea id="popupDetail" readonly></textarea>
             </div>
         </div>
 
+        <!-- custom notification -->
+        <div id="customNotif" class="custom-notif hidden">
+            <span id="notification"></span>
+            <button id="OKbtn">OK</button>
+        </div>
+
     </div>
 
     </main>
+
     <script src="js/main.js"></script>
+    <script src="js/notification.js"></script>
+    <script src="js/timefmt.js"></script>
+
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            const access = localStorage.getItem('access');
+            const refresh = localStorage.getItem('refresh');
+
+            if(access && refresh)
+            {
+                showTaskPage();
+            }
+            else 
+            {
+                showLoginPage();
+            }
+        });
+
+        function showTaskPage() 
+        {
+            document.getElementById("loginHeader").style.display = "none";
+            document.getElementById("userFormLogin").style.display = "none";
+            document.getElementById("registrationHeader").style.display = "none";
+            document.getElementById("userFormReg").style.display = "none";
+            userMgmtInterface.style.display = "none";
+            taskCotainer.style.display = "block";
+            loadTasksList();
+        }
+
+        function showLoginPage() 
+        {
+            document.getElementById("loginHeader").style.display = "block";
+            document.getElementById("userFormLogin").style.display = "block";
+            document.getElementById("registrationHeader").style.display = "none";
+            document.getElementById("userFormReg").style.display = "none";
+            taskCotainer.style.display = "none";
+        }
+
+    </script>
 </body>
 </html>
