@@ -3,6 +3,7 @@ import json
 
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework_simplejwt.tokens import RefreshToken
 
 User = get_user_model()
@@ -27,7 +28,7 @@ def googleLogin(request):
     return JsonResponse({'auth_url': oauth_url})
 
 
-
+@csrf_exempt
 def googleCallback(request):
     
     body = json.loads(request.body)
