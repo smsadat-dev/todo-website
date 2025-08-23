@@ -110,20 +110,35 @@ AUTHENTICATION_BACKENDS = [
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
+        'APP' : {
+            'key': os.getenv("GOOGLE_KEY"),
+            'secret': os.getenv("GOOGLE_SECRET"),
+            'callback_url': None,   
+        },
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'}
     }
 }
 
+REST_USE_JWT = True
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.user_details',
+)
+
+SOCIALACCOUNT_ADAPTER = 'users.adapter.CustomSocialAccountAdapter'
+
+
 SOCIAL_AUTH_GOOGLE_AUTH2_KEY = os.getenv("GOOGLE_KEY")
 SOCIAL_AUTH_GOOGLE_AUTH2_SECRET = os.getenv("GOOGLE_SECRET")
-LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/' # redirect back to SPA root
+
+LOGIN_URL = 'http://localhost:5500/login/'
+LOGIN_REDIRECT_URL = "http://localhost:5500/tasks/"  # or wherever your SPA lives
+LOGOUT_REDIRECT_URL = "http://localhost:5500/"
 
 
 # Database
@@ -175,7 +190,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

@@ -311,6 +311,25 @@ async function loadTasksList()
                         <button class="deleteTaskBtn" data-id="${task.id}">Delete</button>
                     </p>`;
                     taskList.appendChild(li);
+
+                    li.addEventListener('click', (e) => {
+                        if (e.target.classList.contains("taskDoneChckBox") || e.target.classList.contains("deleteTaskBtn")) 
+                        {
+                            return; // don’t trigger popup on checkbox or delete
+                        }
+
+                        // Fill popup with task data
+                        document.getElementById("popupTitle").innerText = task.title;
+                        document.getElementById("popupCreationTime").innerText = fmtTime(task.creationTime);
+                        document.getElementById("popupDetail").value = task.taskDesc || "No details provided";
+
+                        // Show popup
+                        document.getElementById("taskPopup").classList.remove("hidden");
+                    });
+                    // Close button handler
+                    document.getElementById("popupCloseBtn").addEventListener("click", () => {
+                        document.getElementById("taskPopup").classList.add("hidden");
+                    });
                 });
             }
         }
@@ -326,3 +345,17 @@ async function loadTasksList()
     }
 }
 
+// Select all buttons with class 'googleRegBtn'
+const googleButtons = document.querySelectorAll('.googleRegBtn');
+
+googleButtons.forEach(button => {
+  button.addEventListener('click', async () => {
+    try {
+      const res = await fetch('http://127.0.0.1:8000/api/auth/google/login/');
+      const data = await res.json();
+      window.location.href = data.auth_url;  // SPA redirect to Google
+    } catch (err) {
+      console.error('Google login failed:', err);
+    }
+  });
+});

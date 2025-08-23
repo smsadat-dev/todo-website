@@ -103,7 +103,8 @@ body {
 
 
 #id_loginbtn,
-#id_regbtn {
+#id_regbtn,
+.googleRegBtn {
     margin-top: 15px;
     width: 100%;
     flex: 0 0 auto;      /* button stays natural width */
@@ -134,20 +135,6 @@ body {
 
 #id_remember_me_text {
     margin-right: 55px;
-}
-
-.auth {
-    padding-top: 40px;
-    padding-bottom: 10px;
-    position: relative;
-}
-
-.authTitle {
-    position: relative;
-    left: 20px;
-    font-size: 20px;
-    font-weight: 500;
-    color: rgba(204, 198, 198, 0.582);
 }
 
 .googleLogo {
@@ -243,6 +230,12 @@ body {
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
+.or_title {
+    margin-top: 35px;
+    margin-bottom: 15px;
+    color: gray;
+}
+
 /* Tasks list */
 
 .taskslist {
@@ -290,4 +283,70 @@ body {
 .completedTask {
     text-decoration: line-through;
     color: gray;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1000px;
+  height: 600px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 0 25px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  z-index: 9999;
+}
+
+.popup.hidden {
+  display: none;
+}
+
+.popup-header {
+  height: 50px;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+  border-bottom: 1px solid #ddd;
+  background: #f9f9f9;
+}
+
+.popup-header h2 {
+  margin: 0;
+  font-size: 18px;
+  flex: 1;
+}
+
+.popup-header span {
+  margin-left: 15px;
+  font-size: 14px;
+  color: gray;
+}
+
+#popupCloseBtn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.popup-body {
+  flex: 1;
+  display: flex;
+  padding: 10px;
+}
+
+#popupDetail {
+  width: 100%;
+  height: 100%;
+  resize: none;
+  border: none;
+  outline: none;
+  font-family: monospace;
+  font-size: 14px;
+  background: #fafafa;
 }

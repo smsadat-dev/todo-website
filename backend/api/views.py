@@ -162,3 +162,15 @@ def processTasks(request):
         return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
     
     
+
+# Google Oauth
+def google_callback(request):
+    user = request.user
+    refresh = RefreshToken.for_user(user)
+
+    return JsonResponse({
+        'status': 'success',
+        'access': str(refresh.access_token),
+        'refresh': str(refresh),
+        'username': user.username,
+    })

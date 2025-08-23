@@ -33,8 +33,12 @@
                 <label for="id_remember_me" id="id_remember_me_text">Remember me</label>
                 <a href="#" id="showReg">Create new account</a>
                 <p><input type="submit" name="loginbtn" id="id_loginbtn" value="Login"></p>
-                <p>__________or__________</p>
-                <button id="googleLoginBtn">Login with Google</button>
+
+                <!-- Register/Login with Google -->
+                <p>
+                    <input class="googleRegBtn" type="button" value="Login with Google">
+                </p>
+
             </form>
         </div>
 
@@ -65,8 +69,12 @@
                 </div>
                 <a href="#" id="showLogin"> Already have an account? </a>
                 <p><input type="submit" name="regbtn" id="id_regbtn" value="Register"></p>
-                <p>__________or__________</p>
-                <button id="googleRegBtn">Register with Google</button>
+
+                <!-- Register/Login with Google -->
+                <p>
+                    <input class="googleRegBtn" type="button" value="Register with Google">
+                </p>
+
             </form>
         </div>
 
@@ -103,6 +111,18 @@
                     <!-- <p id="noTasktoView">No tasks to do</p> -->
                 </ul>
         </div>
+
+        <div id="taskPopup" class="popup hidden">
+            <div class="popup-header">
+                <h2 id="popupTitle"></h2>
+                <span id="popupCreationTime"></span>
+                <button id="popupCloseBtn">✖</button>
+            </div>
+            <div class="popup-body">
+                <textarea id="popupDetail" readonly></textarea>
+            </div>
+        </div>
+
     </div>
 
     </main>
