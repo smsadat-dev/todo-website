@@ -6,10 +6,10 @@ from .authOauth import googleLogin, googleCallback
 app_name = 'api'
 
 urlpatterns = [
-    path('login/', views.usrLogin),
-    path('registration/', views.userRegistration),
-    path('logout/', views.userLogout),
-    path('tasks/', views.processTasks),
+    path('login/', views.usrLogin, name='login'),
+    path('registration/', views.userRegistration, name='registration'),
+    path('logout/', views.userLogout, name='logout'),
+    path('tasks/', views.processTasks, name='tasks'),
 
     path('api/auth/google/', include('allauth.socialaccount.providers.google.urls')),
 

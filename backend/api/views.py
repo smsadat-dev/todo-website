@@ -16,7 +16,7 @@ from .models import TaskModel
 def usrLogin(request):
 
     if request.method != 'POST':
-        return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=401)
 
     username = request.POST.get('username')
     password = request.POST.get('password')
@@ -24,7 +24,7 @@ def usrLogin(request):
     user = authenticate(username=username, password=password)
 
     if user is None:
-        return JsonResponse({'status': 'error', 'message': 'Invalid credentials'})
+        return JsonResponse({'status': 'error', 'message': 'Invalid credentials'}, status=401)
 
     # create JWT token
 
@@ -49,38 +49,38 @@ def userRegistration(request):
     email = request.POST.get('email')
 
     if not username or not password1 or not password2 or not email:
-        return JsonResponse({'status': 'error', 'message': 'All fields are required'})
+        return JsonResponse({'status': 'error', 'message': 'All fields are required'}, status=200)
     
     if password1 != password2:
-        return JsonResponse({'status': 'error', 'message': 'Passwords don\'t match'})
+        return JsonResponse({'status': 'error', 'message': 'Passwords don\'t match'}, status=401)
     
     if User.objects.filter(username=username):
-        return JsonResponse({'status': 'error', 'message': 'Username taken'})
+        return JsonResponse({'status': 'error', 'message': 'Username taken'}, status=401)
     
     user = User.objects.create_user(username=username, password=password1, email=email)
 
-    return JsonResponse({'status': 'success', 'message': 'Congratulations! You are registered'})
+    return JsonResponse({'status': 'success', 'message': 'Congratulations! You are registered'}, status=200)
 
 
 @csrf_exempt # used JWT instead
 def userLogout(request):
     if request.method != 'POST':
-        return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=401)
     
     try:
         body = json.loads(request.body)
         refreshToken = body.get('refresh')
 
         if not refreshToken:
-            return JsonResponse({'status': 'error', 'message': 'Refresh token required'})
+            return JsonResponse({'status': 'error', 'message': 'Refresh token required'}, status=401)
 
         token = RefreshToken(refreshToken)
         token.blacklist()
 
-        return JsonResponse({'status': 'success', 'message': 'You are logged out'})
+        return JsonResponse({'status': 'success', 'message': 'You are logged out'}, status=200)
 
     except Exception as e:
-        return JsonResponse({'status': 'error', 'message': str(e)})
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=401)
     
 
 @csrf_exempt # used JWT instead
